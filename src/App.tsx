@@ -1,21 +1,11 @@
-import React, { useState } from 'react';
-import GameBoard from './components/GameBoard';
-import StartScreen from './components/StartScreen';
+import React from 'react';
+import AppRouter from './routes/Router';
+import './styles/main.css';
 
 const App: React.FC = () => {
-  const [gameStarted, setGameStarted] = useState(false);
-
-  const handleStartGame = () => {
-    setGameStarted(true);
-  };
-
   return (
     <div className="container mx-auto p-4">
-      {gameStarted ? (
-        <GameBoard />
-      ) : (
-        <StartScreen onStart={handleStartGame} />
-      )}
+      <AppRouter />
     </div>
   );
 };

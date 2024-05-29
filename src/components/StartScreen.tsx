@@ -1,17 +1,40 @@
-import React from 'react';
-import '../styles/StartScreen.css';  
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../styles/StartScreen.css';
 
-interface StartScreenProps {
-  onStart: () => void;
-}
+import durakLogo from '../assets/durak.png';
+import playButton from '../assets/play.png';
+import howButton from '../assets/how.png';
+import settingsButton from '../assets/settings.png';
+import exitButton from '../assets/exit.png';
 
-const StartScreen: React.FC<StartScreenProps> = ({ onStart }) => {
+const StartScreen: React.FC = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    document.body.classList.add('start-screen-active');
+    return () => {
+      document.body.classList.remove('start-screen-active');
+    };
+  }, []);
+
+  const handleStartGame = () => {
+    navigate('/game');
+  };
+
   return (
     <div className="start-screen">
-      <h1>Durak Game</h1>
-      <button onClick={onStart}>
-        Play
-      </button>
+      <img src={durakLogo} alt="Durak Logo" className="logo" />
+      <img src={playButton} alt="Play Button" className="button" onClick={handleStartGame} />
+      <Link to="/howto">
+        <img src={howButton} alt="How To Button" className="button" />
+      </Link>
+      <Link to="/settings">
+        <img src={settingsButton} alt="Settings Button" className="button" />
+      </Link>
+      <Link to="/">
+        <img src={exitButton} alt="Exit Button" className="button" />
+      </Link>
     </div>
   );
 };

@@ -1,0 +1,29 @@
+.game-board {
+    padding: 20px;
+  }
+  
+  .table {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .table img {
+    width: 50px;
+    height: 75px;
+    margin: 5px;
+  }
+  
+  .player-hand, .opponent-hand {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .hand img {
+    width: 70px;
+    height: 105px;
+    margin: 5px;
+  }
+  

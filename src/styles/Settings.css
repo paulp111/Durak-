@@ -1,0 +1,29 @@
+.settings {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .settings h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .settings p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+  
+  .settings .button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .settings .button:hover {
+    transform: scale(1.1);
+  }
+  
