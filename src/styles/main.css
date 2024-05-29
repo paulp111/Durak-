@@ -35,11 +35,13 @@ body {
 }
 
 .table-cards img {
-  width: 50px; 
-  height: 75px; 
+  width: 50px; /* kleinere Breite für die Karten auf dem Spielfeld */
+  height: 75px; /* kleinere Höhe für die Karten auf dem Spielfeld */
 }
 
 .trump-card img {
-  width: 70px; 
-  height: 105px; 
+  width: 70px; /* kleinere Breite für die Trumpfkarte */
+  height: 105px; /* kleinere Höhe für die Trumpfkarte */
 }
+
+
