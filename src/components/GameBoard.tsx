@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchDeck, drawCards, Card } from '../api/deckApi';
 import Hand from './Hand';
+import '../styles/GameBoard.css';
 
 const GameBoard: React.FC = () => {
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
@@ -34,7 +35,6 @@ const GameBoard: React.FC = () => {
       setPlayerHand(playerHand.filter(c => c.code !== card.code));
       setTurn('opponent');
       console.log('Player attacks with card:', card);
-      checkGameOver();
     }
   };
 
@@ -50,44 +50,45 @@ const GameBoard: React.FC = () => {
         setOpponentHand(opponentHand.filter(c => c.code !== card.code));
         setTurn('player');
         console.log('Opponent defends with card:', card);
-        checkGameOver();
       }
     }
   };
 
   const endTurn = async () => {
-    // Spieler ziehen Karten nach
+    // Check if game over condition is met before drawing new cards
+    if (playerHand.length === 0 || opponentHand.length === 0) {
+      checkGameOver();
+      return;
+    }
+
+    // Draw new cards for player and opponent to maintain 6 cards in hand
     const playerNewCards = await drawCards(deckId, 6 - playerHand.length);
     const opponentNewCards = await drawCards(deckId, 6 - opponentHand.length);
     setPlayerHand([...playerHand, ...playerNewCards]);
     setOpponentHand([...opponentHand, ...opponentNewCards]);
 
-    // Runde beenden
+    // Clear the table and start a new round
     setTable([]);
+    setTurn('player');
     console.log('Turn ended. Players drew new cards.');
-    checkGameOver();
   };
 
   const checkGameOver = () => {
     console.log('Checking game over condition...');
     if (playerHand.length === 0 && opponentHand.length > 0) {
-      console.log('Game Over! Opponent wins');
       setGameOver(true);
       setWinner('opponent');
+      console.log('Game Over! Opponent wins.');
     } else if (opponentHand.length === 0 && playerHand.length > 0) {
-      console.log('Game Over! Player wins');
       setGameOver(true);
       setWinner('player');
+      console.log('Game Over! Player wins.');
     } else if (playerHand.length === 0 && opponentHand.length === 0) {
-      console.log('Game Over! It\'s a draw');
       setGameOver(true);
-      setWinner(null); // Unentschieden
+      setWinner(null);
+      console.log('Game Over! It\'s a draw.');
     }
-    console.log('Game Over State:', gameOver);
-    console.log('Winner State:', winner);
   };
-
-  console.log('Rendering... Game Over:', gameOver, 'Winner:', winner);
 
   return (
     <div className="container mx-auto p-4">

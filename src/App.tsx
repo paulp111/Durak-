@@ -4,7 +4,7 @@ import './styles/main.css';
 
 const App: React.FC = () => {
   return (
-    <div className="container mx-auto p-4">
+    <div className="container">
       <AppRouter />
     </div>
   );

@@ -6,7 +6,6 @@ import HowTo from '../components/HowTo';
 import Settings from '../components/Settings';
 
 const AppRouter: React.FC = () => {
-
   return (
     <Router>
       <Routes>
