@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles */
+body {
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.card img {
+  transition: transform 0.2s;
+}
+
+.card img:hover {
+  transform: scale(1.1);
+}
+
+.hand {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.table-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.table-cards img {
+  width: 50px; 
+  height: 75px; 
+}
+
+.trump-card img {
+  width: 70px; 
+  height: 105px; 
+}
