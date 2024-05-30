@@ -15,3 +15,4 @@ const Card: React.FC<CardProps> = ({ image, code, onClick }) => {
 };
 
 export default Card;
+

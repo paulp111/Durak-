@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/StartScreen.css';
 
@@ -10,11 +10,18 @@ import exitButton from '../assets/exit.png';
 
 const StartScreen: React.FC = () => {
   const navigate = useNavigate();
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     document.body.classList.add('start-screen-active');
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
     return () => {
       document.body.classList.remove('start-screen-active');
+      if (audioRef.current) {
+        audioRef.current.pause();
+      }
     };
   }, []);
 

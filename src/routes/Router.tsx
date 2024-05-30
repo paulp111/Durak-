@@ -5,13 +5,18 @@ import StartScreen from '../components/StartScreen';
 import HowTo from '../components/HowTo';
 import Settings from '../components/Settings';
 
-const AppRouter: React.FC = () => {
+interface AppRouterProps {
+  toggleMusic: () => void;
+  musicEnabled: boolean;
+}
+
+const AppRouter: React.FC<AppRouterProps> = ({ toggleMusic, musicEnabled }) => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<StartScreen />} />
         <Route path="/howto" element={<HowTo />} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/settings" element={<Settings toggleMusic={toggleMusic} musicEnabled={musicEnabled} />} />
         <Route path="/game" element={<GameBoard />} />
       </Routes>
     </Router>

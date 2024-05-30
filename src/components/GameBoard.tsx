@@ -5,23 +5,26 @@ import '../styles/GameBoard.css';
 
 const GameBoard: React.FC = () => {
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
-  const [opponentHand, setOpponentHand] = useState<Card[]>([]);
+  const [opponent1Hand, setOpponent1Hand] = useState<Card[]>([]);
+  const [opponent2Hand, setOpponent2Hand] = useState<Card[]>([]);
   const [trumpCard, setTrumpCard] = useState<Card | null>(null);
   const [deckId, setDeckId] = useState<string>('');
   const [table, setTable] = useState<{ attacker: Card; defender?: Card }[]>([]);
-  const [turn, setTurn] = useState<'player' | 'opponent'>('player');
+  const [turn, setTurn] = useState<'player' | 'opponent1' | 'opponent2'>('player');
   const [gameOver, setGameOver] = useState<boolean>(false);
-  const [winner, setWinner] = useState<'player' | 'opponent' | null>(null);
+  const [winner, setWinner] = useState<'player' | 'opponent1' | 'opponent2' | null>(null);
 
   useEffect(() => {
     const startGame = async () => {
       const deckId = await fetchDeck();
       setDeckId(deckId);
       const playerCards = await drawCards(deckId, 6);
-      const opponentCards = await drawCards(deckId, 6);
+      const opponent1Cards = await drawCards(deckId, 6);
+      const opponent2Cards = await drawCards(deckId, 6);
       const trumpCard = (await drawCards(deckId, 1))[0];
       setPlayerHand(playerCards);
-      setOpponentHand(opponentCards);
+      setOpponent1Hand(opponent1Cards);
+      setOpponent2Hand(opponent2Cards);
       setTrumpCard(trumpCard);
       console.log('Game started with deckId:', deckId);
     };
@@ -33,13 +36,13 @@ const GameBoard: React.FC = () => {
     if (turn === 'player') {
       setTable([...table, { attacker: card }]);
       setPlayerHand(playerHand.filter(c => c.code !== card.code));
-      setTurn('opponent');
+      setTurn('opponent1');
       console.log('Player attacks with card:', card);
     }
   };
 
   const handleDefend = (card: Card) => {
-    if (turn === 'opponent') {
+    if (turn === 'opponent1') {
       const lastAttack = table[table.length - 1];
       if (lastAttack && !lastAttack.defender) {
         setTable(
@@ -47,25 +50,43 @@ const GameBoard: React.FC = () => {
             index === table.length - 1 ? { ...entry, defender: card } : entry
           )
         );
-        setOpponentHand(opponentHand.filter(c => c.code !== card.code));
+        setOpponent1Hand(opponent1Hand.filter(c => c.code !== card.code));
+        setTurn('opponent2');
+        console.log('Opponent 1 defends with card:', card);
+      }
+    }
+  };
+
+  const handleDefend2 = (card: Card) => {
+    if (turn === 'opponent2') {
+      const lastAttack = table[table.length - 1];
+      if (lastAttack && !lastAttack.defender) {
+        setTable(
+          table.map((entry, index) =>
+            index === table.length - 1 ? { ...entry, defender: card } : entry
+          )
+        );
+        setOpponent2Hand(opponent2Hand.filter(c => c.code !== card.code));
         setTurn('player');
-        console.log('Opponent defends with card:', card);
+        console.log('Opponent 2 defends with card:', card);
       }
     }
   };
 
   const endTurn = async () => {
     // Check if game over condition is met before drawing new cards
-    if (playerHand.length === 0 || opponentHand.length === 0) {
+    if (playerHand.length === 0 || opponent1Hand.length === 0 || opponent2Hand.length === 0) {
       checkGameOver();
       return;
     }
 
-    // Draw new cards for player and opponent to maintain 6 cards in hand
+    // Draw new cards for player and opponents to maintain 6 cards in hand
     const playerNewCards = await drawCards(deckId, 6 - playerHand.length);
-    const opponentNewCards = await drawCards(deckId, 6 - opponentHand.length);
+    const opponent1NewCards = await drawCards(deckId, 6 - opponent1Hand.length);
+    const opponent2NewCards = await drawCards(deckId, 6 - opponent2Hand.length);
     setPlayerHand([...playerHand, ...playerNewCards]);
-    setOpponentHand([...opponentHand, ...opponentNewCards]);
+    setOpponent1Hand([...opponent1Hand, ...opponent1NewCards]);
+    setOpponent2Hand([...opponent2Hand, ...opponent2NewCards]);
 
     // Clear the table and start a new round
     setTable([]);
@@ -75,15 +96,19 @@ const GameBoard: React.FC = () => {
 
   const checkGameOver = () => {
     console.log('Checking game over condition...');
-    if (playerHand.length === 0 && opponentHand.length > 0) {
+    if (playerHand.length === 0 && opponent1Hand.length > 0 && opponent2Hand.length > 0) {
       setGameOver(true);
-      setWinner('opponent');
-      console.log('Game Over! Opponent wins.');
-    } else if (opponentHand.length === 0 && playerHand.length > 0) {
+      setWinner('opponent1');
+      console.log('Game Over! Opponent 1 wins.');
+    } else if (opponent1Hand.length === 0 && playerHand.length > 0 && opponent2Hand.length > 0) {
       setGameOver(true);
       setWinner('player');
       console.log('Game Over! Player wins.');
-    } else if (playerHand.length === 0 && opponentHand.length === 0) {
+    } else if (opponent2Hand.length === 0 && playerHand.length > 0 && opponent1Hand.length > 0) {
+      setGameOver(true);
+      setWinner('player');
+      console.log('Game Over! Player wins.');
+    } else if (playerHand.length === 0 && opponent1Hand.length === 0 && opponent2Hand.length === 0) {
       setGameOver(true);
       setWinner(null);
       console.log('Game Over! It\'s a draw.');
@@ -96,7 +121,8 @@ const GameBoard: React.FC = () => {
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
           {winner === 'player' && 'You Win! Opponent is the Durak!'}
-          {winner === 'opponent' && 'You Lose! You are the Durak!'}
+          {winner === 'opponent1' && 'You Lose! You are the Durak!'}
+          {winner === 'opponent2' && 'Opponent 2 wins!'}
           {winner === null && 'It\'s a draw!'}
         </div>
       ) : (
@@ -118,13 +144,19 @@ const GameBoard: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="player-hand mb-4">
-            <h2 className="text-2xl font-semibold mb-2">Your Hand</h2>
-            <Hand cards={playerHand} onCardClick={handleAttack} />
-          </div>
-          <div className="opponent-hand mb-4">
-            <h2 className="text-2xl font-semibold mb-2">Opponent's Hand</h2>
-            <Hand cards={opponentHand} onCardClick={handleDefend} />
+          <div className="hand-row">
+            <div className="opponent-hand">
+              <h2 className="text-2xl font-semibold mb-2">Opponent 1's Hand</h2>
+              <Hand cards={opponent1Hand} onCardClick={handleDefend} />
+            </div>
+            <div className="player-hand">
+              <h2 className="text-2xl font-semibold mb-2">Your Hand</h2>
+              <Hand cards={playerHand} onCardClick={handleAttack} />
+            </div>
+            <div className="opponent-hand">
+              <h2 className="text-2xl font-semibold mb-2">Opponent 2's Hand</h2>
+              <Hand cards={opponent2Hand} onCardClick={handleDefend2} />
+            </div>
           </div>
           <button
             className="bg-blue-500 text-white p-2 rounded"
