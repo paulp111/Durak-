@@ -31,6 +31,7 @@ const StartScreen: React.FC = () => {
 
   return (
     <div className="start-screen">
+      <audio ref={audioRef} src="/Durak-/src/assets/music1.mp3" loop />
       <img src={durakLogo} alt="Durak Logo" className="logo" />
       <img src={playButton} alt="Play Button" className="button" onClick={handleStartGame} />
       <Link to="/howto">
