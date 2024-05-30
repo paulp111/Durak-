@@ -12,30 +12,32 @@ const App: React.FC = () => {
       if (musicEnabled) {
         audioRef.current.pause();
       } else {
-        audioRef.current.play();
+        audioRef.current.play().catch((e) => console.error('Failed to play audio:', e));
       }
     }
   };
 
   useEffect(() => {
-    if (audioRef.current) {
-      if (musicEnabled) {
+    const handleUserInteraction = () => {
+      if (audioRef.current && musicEnabled) {
         audioRef.current.play().catch((e) => console.error('Failed to play audio:', e));
-      } else {
-        audioRef.current.pause();
       }
-    }
-  }, [musicEnabled]);
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
 
-  useEffect(() => {
-    if (audioRef.current && musicEnabled) {
-      audioRef.current.play().catch((e) => console.error('Failed to play audio:', e));
-    }
-  }, []);
+    document.addEventListener('click', handleUserInteraction);
+    document.addEventListener('keydown', handleUserInteraction);
+
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, [musicEnabled]);
 
   return (
     <>
-      <audio ref={audioRef} src="/src/assets/music1.mp3" loop />
+      <audio ref={audioRef} src="/Durak-/assets/music1.mp3" loop />
       <AppRouter toggleMusic={toggleMusic} musicEnabled={musicEnabled} />
     </>
   );
