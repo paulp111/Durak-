@@ -32,6 +32,32 @@ const GameBoard: React.FC = () => {
     startGame();
   }, []);
 
+  useEffect(() => {
+    if (turn === 'opponent1' || turn === 'opponent2') {
+      const makeMove = () => {
+        const hand = turn === 'opponent1' ? opponent1Hand : opponent2Hand;
+        const setHand = turn === 'opponent1' ? setOpponent1Hand : setOpponent2Hand;
+
+        const cardToPlay = hand[0];
+        if (cardToPlay) {
+          if (table.length === 0 || (table.length > 0 && !table[table.length - 1].defender)) {
+            setTable([...table, { attacker: cardToPlay }]);
+          } else {
+            setTable(
+              table.map((entry, index) =>
+                index === table.length - 1 ? { ...entry, defender: cardToPlay } : entry
+              )
+            );
+          }
+          setHand(hand.filter(c => c.code !== cardToPlay.code));
+          setTurn(turn === 'opponent1' ? 'opponent2' : 'player');
+        }
+      };
+
+      setTimeout(makeMove, 1000); 
+    }
+  }, [turn, opponent1Hand, opponent2Hand, table]);
+
   const handleAttack = (card: Card) => {
     if (turn === 'player') {
       setTable([...table, { attacker: card }]);
@@ -41,46 +67,12 @@ const GameBoard: React.FC = () => {
     }
   };
 
-  const handleDefend = (card: Card) => {
-    if (turn === 'opponent1') {
-      const lastAttack = table[table.length - 1];
-      if (lastAttack && !lastAttack.defender) {
-        setTable(
-          table.map((entry, index) =>
-            index === table.length - 1 ? { ...entry, defender: card } : entry
-          )
-        );
-        setOpponent1Hand(opponent1Hand.filter(c => c.code !== card.code));
-        setTurn('opponent2');
-        console.log('Opponent 1 defends with card:', card);
-      }
-    }
-  };
-
-  const handleDefend2 = (card: Card) => {
-    if (turn === 'opponent2') {
-      const lastAttack = table[table.length - 1];
-      if (lastAttack && !lastAttack.defender) {
-        setTable(
-          table.map((entry, index) =>
-            index === table.length - 1 ? { ...entry, defender: card } : entry
-          )
-        );
-        setOpponent2Hand(opponent2Hand.filter(c => c.code !== card.code));
-        setTurn('player');
-        console.log('Opponent 2 defends with card:', card);
-      }
-    }
-  };
-
   const endTurn = async () => {
-    // Check if game over condition is met before drawing new cards
-    if (playerHand.length === 0 || opponent1Hand.length === 0 || opponent2Hand.length === 0) {
+    if (playerHand.length === 0 || (opponent1Hand.length === 0 && opponent2Hand.length === 0)) {
       checkGameOver();
       return;
     }
 
-    // Draw new cards for player and opponents to maintain 6 cards in hand
     const playerNewCards = await drawCards(deckId, 6 - playerHand.length);
     const opponent1NewCards = await drawCards(deckId, 6 - opponent1Hand.length);
     const opponent2NewCards = await drawCards(deckId, 6 - opponent2Hand.length);
@@ -88,7 +80,6 @@ const GameBoard: React.FC = () => {
     setOpponent1Hand([...opponent1Hand, ...opponent1NewCards]);
     setOpponent2Hand([...opponent2Hand, ...opponent2NewCards]);
 
-    // Clear the table and start a new round
     setTable([]);
     setTurn('player');
     console.log('Turn ended. Players drew new cards.');
@@ -96,15 +87,11 @@ const GameBoard: React.FC = () => {
 
   const checkGameOver = () => {
     console.log('Checking game over condition...');
-    if (playerHand.length === 0 && opponent1Hand.length > 0 && opponent2Hand.length > 0) {
+    if (playerHand.length === 0 && (opponent1Hand.length > 0 || opponent2Hand.length > 0)) {
       setGameOver(true);
       setWinner('opponent1');
-      console.log('Game Over! Opponent 1 wins.');
-    } else if (opponent1Hand.length === 0 && playerHand.length > 0 && opponent2Hand.length > 0) {
-      setGameOver(true);
-      setWinner('player');
-      console.log('Game Over! Player wins.');
-    } else if (opponent2Hand.length === 0 && playerHand.length > 0 && opponent1Hand.length > 0) {
+      console.log('Game Over! Opponent wins.');
+    } else if ((opponent1Hand.length === 0 || opponent2Hand.length === 0) && playerHand.length > 0) {
       setGameOver(true);
       setWinner('player');
       console.log('Game Over! Player wins.');
@@ -120,9 +107,8 @@ const GameBoard: React.FC = () => {
       <h1 className="text-4xl font-bold text-center mb-4">Durak Game</h1>
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
-          {winner === 'player' && 'You Win! Opponent is the Durak!'}
-          {winner === 'opponent1' && 'You Lose! You are the Durak!'}
-          {winner === 'opponent2' && 'Opponent 2 wins!'}
+          {winner === 'player' && 'You Win! Opponents are the Durak!'}
+          {winner !== 'player' && 'You Lose! You are the Durak!'}
           {winner === null && 'It\'s a draw!'}
         </div>
       ) : (
@@ -144,19 +130,17 @@ const GameBoard: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="hand-row">
-            <div className="opponent-hand">
-              <h2 className="text-2xl font-semibold mb-2">Opponent 1's Hand</h2>
-              <Hand cards={opponent1Hand} onCardClick={handleDefend} />
-            </div>
-            <div className="player-hand">
-              <h2 className="text-2xl font-semibold mb-2">Your Hand</h2>
-              <Hand cards={playerHand} onCardClick={handleAttack} />
-            </div>
-            <div className="opponent-hand">
-              <h2 className="text-2xl font-semibold mb-2">Opponent 2's Hand</h2>
-              <Hand cards={opponent2Hand} onCardClick={handleDefend2} />
-            </div>
+          <div className="player-hand mb-4">
+            <h2 className="text-2xl font-semibold mb-2">Your Hand</h2>
+            <Hand cards={playerHand} onCardClick={handleAttack} />
+          </div>
+          <div className="opponent1-hand mb-4">
+            <h2 className="text-2xl font-semibold mb-2">Opponent 1's Hand</h2>
+            <Hand cards={opponent1Hand} onCardClick={() => {}} isOpponent />
+          </div>
+          <div className="opponent2-hand mb-4">
+            <h2 className="text-2xl font-semibold mb-2">Opponent 2's Hand</h2>
+            <Hand cards={opponent2Hand} onCardClick={() => {}} isOpponent />
           </div>
           <button
             className="bg-blue-500 text-white p-2 rounded"
