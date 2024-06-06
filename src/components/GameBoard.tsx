@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { fetchDeck, drawCards, Card } from '../api/deckApi';
 import Hand from './Hand';
 import '../styles/GameBoard.css';
+import durakLogo from '../assets/Red_star.svg.png'; // Import the star image
 
 const GameBoard: React.FC = () => {
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
@@ -132,6 +133,7 @@ const GameBoard: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <img src={durakLogo} alt="Durak Logo" className="logo" /> {/* Add the star image here */}
       <h1 className="text-4xl font-bold text-center mb-4">Durak Game</h1>
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
@@ -159,16 +161,13 @@ const GameBoard: React.FC = () => {
               ))}
             </div>
           </div>
-          <div className="player-hand mb-4">
-            <h2 className="text-2xl font-semibold mb-2">Your Hand</h2>
+          <div className="player-hand">
             <Hand cards={playerHand} onCardClick={handleAttack} />
           </div>
-          <div className="opponent-hand mb-4">
-            <h2 className="text-2xl font-semibold mb-2">Opponent 1's Hand</h2>
+          <div className="opponent-hand opponent1-hand">
             <Hand cards={opponent1Hand.map(card => ({ ...card, image: 'https://www.deckofcardsapi.com/static/img/back.png' }))} />
           </div>
-          <div className="opponent-hand mb-4">
-            <h2 className="text-2xl font-semibold mb-2">Opponent 2's Hand</h2>
+          <div className="opponent-hand opponent2-hand">
             <Hand cards={opponent2Hand.map(card => ({ ...card, image: 'https://www.deckofcardsapi.com/static/img/back.png' }))} />
           </div>
           <button
