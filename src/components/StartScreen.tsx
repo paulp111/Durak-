@@ -2,11 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/StartScreen.css';
 
-import durakLogo from '../assets/durak.png';
-import playButton from '../assets/play.png';
-import howButton from '../assets/how.png';
-import settingsButton from '../assets/settings.png';
-import exitButton from '../assets/exit.png';
+import durakLogo from '../assets/Red_star.svg.png';
 
 const StartScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -31,17 +27,14 @@ const StartScreen: React.FC = () => {
 
   return (
     <div className="start-screen">
-      <img src={durakLogo} alt="Durak Logo" className="logo" />
-      <img src={playButton} alt="Play Button" className="button" onClick={handleStartGame} />
-      <Link to="/howto">
-        <img src={howButton} alt="How To Button" className="button" />
-      </Link>
-      <Link to="/settings">
-        <img src={settingsButton} alt="Settings Button" className="button" />
-      </Link>
-      <Link to="/">
-        <img src={exitButton} alt="Exit Button" className="button" />
-      </Link>
+      <div className="logo-container">
+        <div className="glow"></div>
+        <img src={durakLogo} alt="Durak Logo" className="logo" />
+      </div>
+      <a onClick={handleStartGame}><span>Play</span></a>
+      <Link to="/howto"><span>How To</span></Link>
+      <Link to="/settings"><span>Settings</span></Link>
+      <Link to="/"><span>Exit</span></Link>
     </div>
   );
 };
