@@ -12,7 +12,7 @@ interface AppRouterProps {
 
 const AppRouter: React.FC<AppRouterProps> = ({ toggleMusic, musicEnabled }) => {
   return (
-    <Router basename="/Durak-">  {/* Basename hinzugefügt */}
+    <Router basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<StartScreen />} />
         <Route path="/howto" element={<HowTo />} />

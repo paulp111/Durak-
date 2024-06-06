@@ -6,15 +6,10 @@ interface CardProps {
   onClick?: () => void;
 }
 
-const CardComponent: React.FC<CardProps> = ({ image, code, onClick }) => {
+const Card: React.FC<CardProps> = ({ image, code, onClick }) => {
   return (
-    <img
-      src={image}
-      alt={code}
-      className="w-16 h-24 cursor-pointer"
-      onClick={onClick}
-    />
+    <img src={image} alt={code} onClick={onClick} className="w-16 h-24 cursor-pointer" />
   );
 };
 
-export default CardComponent;
+export default Card;

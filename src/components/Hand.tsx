@@ -5,19 +5,13 @@ import { Card } from '../api/deckApi';
 interface HandProps {
   cards: Card[];
   onCardClick?: (card: Card) => void;
-  isOpponent?: boolean;
 }
 
-const Hand: React.FC<HandProps> = ({ cards, onCardClick, isOpponent = false }) => {
+const Hand: React.FC<HandProps> = ({ cards, onCardClick }) => {
   return (
-    <div className={`hand flex space-x-2 ${isOpponent ? 'opponent-hand' : ''}`}>
+    <div className="hand flex space-x-2">
       {cards.map(card => (
-        <CardComponent
-          key={card.code}
-          image={isOpponent ? 'https://www.deckofcardsapi.com/static/img/back.png' : card.image}
-          code={card.code}
-          onClick={() => onCardClick && onCardClick(card)}
-        />
+        <CardComponent key={card.code} image={card.image} code={card.code} onClick={() => onCardClick && onCardClick(card)} />
       ))}
     </div>
   );

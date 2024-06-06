@@ -35,7 +35,7 @@ const App: React.FC = () => {
 
   return (
     <>
-      <audio ref={audioRef} src="/Durak-/src/assets/background_music.m4a" loop />
+      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}src/assets/music1.mp3`} loop />
       <AppRouter toggleMusic={toggleMusic} musicEnabled={musicEnabled} />
     </>
   );

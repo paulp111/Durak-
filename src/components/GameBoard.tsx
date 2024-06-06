@@ -32,32 +32,6 @@ const GameBoard: React.FC = () => {
     startGame();
   }, []);
 
-  useEffect(() => {
-    if (turn === 'opponent1' || turn === 'opponent2') {
-      const makeMove = () => {
-        const hand = turn === 'opponent1' ? opponent1Hand : opponent2Hand;
-        const setHand = turn === 'opponent1' ? setOpponent1Hand : setOpponent2Hand;
-
-        const cardToPlay = hand[0];
-        if (cardToPlay) {
-          if (table.length === 0 || (table.length > 0 && !table[table.length - 1].defender)) {
-            setTable([...table, { attacker: cardToPlay }]);
-          } else {
-            setTable(
-              table.map((entry, index) =>
-                index === table.length - 1 ? { ...entry, defender: cardToPlay } : entry
-              )
-            );
-          }
-          setHand(hand.filter(c => c.code !== cardToPlay.code));
-          setTurn(turn === 'opponent1' ? 'opponent2' : 'player');
-        }
-      };
-
-      setTimeout(makeMove, 1000); 
-    }
-  }, [turn, opponent1Hand, opponent2Hand, table]);
-
   const handleAttack = (card: Card) => {
     if (turn === 'player') {
       setTable([...table, { attacker: card }]);
@@ -67,8 +41,58 @@ const GameBoard: React.FC = () => {
     }
   };
 
+  const handleDefend = (card: Card) => {
+    const lastAttack = table[table.length - 1];
+    if (lastAttack && !lastAttack.defender) {
+      setTable(
+        table.map((entry, index) =>
+          index === table.length - 1 ? { ...entry, defender: card } : entry
+        )
+      );
+      console.log('Defends with card:', card);
+    }
+  };
+
+  const aiMakeMove = async () => {
+    if (turn === 'opponent1') {
+      const validCard = opponent1Hand.find(card => isValidMove(card));
+      if (validCard) {
+        handleDefend(validCard);
+        setOpponent1Hand(opponent1Hand.filter(c => c.code !== validCard.code));
+      }
+      setTurn('opponent2');
+    } else if (turn === 'opponent2') {
+      const validCard = opponent2Hand.find(card => isValidMove(card));
+      if (validCard) {
+        handleDefend(validCard);
+        setOpponent2Hand(opponent2Hand.filter(c => c.code !== validCard.code));
+      }
+      setTurn('player');
+    }
+  };
+
+  const isValidMove = (card: Card) => {
+    const lastAttack = table[table.length - 1];
+    if (!lastAttack || lastAttack.defender) {
+      return false;
+    }
+    if (card.suit === lastAttack.attacker.suit && card.value > lastAttack.attacker.value) {
+      return true;
+    }
+    if (card.suit === trumpCard?.suit && lastAttack.attacker.suit !== trumpCard.suit) {
+      return true;
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    if (turn !== 'player') {
+      aiMakeMove();
+    }
+  }, [turn]);
+
   const endTurn = async () => {
-    if (playerHand.length === 0 || (opponent1Hand.length === 0 && opponent2Hand.length === 0)) {
+    if (playerHand.length === 0 || opponent1Hand.length === 0 || opponent2Hand.length === 0) {
       checkGameOver();
       return;
     }
@@ -87,14 +111,18 @@ const GameBoard: React.FC = () => {
 
   const checkGameOver = () => {
     console.log('Checking game over condition...');
-    if (playerHand.length === 0 && (opponent1Hand.length > 0 || opponent2Hand.length > 0)) {
-      setGameOver(true);
-      setWinner('opponent1');
-      console.log('Game Over! Opponent wins.');
-    } else if ((opponent1Hand.length === 0 || opponent2Hand.length === 0) && playerHand.length > 0) {
+    if (playerHand.length === 0 && opponent1Hand.length > 0 && opponent2Hand.length > 0) {
       setGameOver(true);
       setWinner('player');
       console.log('Game Over! Player wins.');
+    } else if (opponent1Hand.length === 0 && playerHand.length > 0 && opponent2Hand.length > 0) {
+      setGameOver(true);
+      setWinner('opponent1');
+      console.log('Game Over! Opponent 1 wins.');
+    } else if (opponent2Hand.length === 0 && playerHand.length > 0 && opponent1Hand.length > 0) {
+      setGameOver(true);
+      setWinner('opponent2');
+      console.log('Game Over! Opponent 2 wins.');
     } else if (playerHand.length === 0 && opponent1Hand.length === 0 && opponent2Hand.length === 0) {
       setGameOver(true);
       setWinner(null);
@@ -108,7 +136,8 @@ const GameBoard: React.FC = () => {
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
           {winner === 'player' && 'You Win! Opponents are the Durak!'}
-          {winner !== 'player' && 'You Lose! You are the Durak!'}
+          {winner === 'opponent1' && 'Opponent 1 Wins! You are the Durak!'}
+          {winner === 'opponent2' && 'Opponent 2 Wins! You are the Durak!'}
           {winner === null && 'It\'s a draw!'}
         </div>
       ) : (
@@ -134,13 +163,13 @@ const GameBoard: React.FC = () => {
             <h2 className="text-2xl font-semibold mb-2">Your Hand</h2>
             <Hand cards={playerHand} onCardClick={handleAttack} />
           </div>
-          <div className="opponent1-hand mb-4">
+          <div className="opponent-hand mb-4">
             <h2 className="text-2xl font-semibold mb-2">Opponent 1's Hand</h2>
-            <Hand cards={opponent1Hand} onCardClick={() => {}} isOpponent />
+            <Hand cards={opponent1Hand.map(card => ({ ...card, image: 'https://www.deckofcardsapi.com/static/img/back.png' }))} />
           </div>
-          <div className="opponent2-hand mb-4">
+          <div className="opponent-hand mb-4">
             <h2 className="text-2xl font-semibold mb-2">Opponent 2's Hand</h2>
-            <Hand cards={opponent2Hand} onCardClick={() => {}} isOpponent />
+            <Hand cards={opponent2Hand.map(card => ({ ...card, image: 'https://www.deckofcardsapi.com/static/img/back.png' }))} />
           </div>
           <button
             className="bg-blue-500 text-white p-2 rounded"
