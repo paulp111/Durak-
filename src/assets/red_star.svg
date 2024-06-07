@@ -1,0 +1,18 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="neonFilter" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur2"/>
+      <feMerge>
+        <feMergeNode in="blur2"/>
+        <feMergeNode in="blur1"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <linearGradient id="neonGradient" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#ff0000"/>
+      <stop offset="100%" stop-color="#ff6666"/>
+    </linearGradient>
+  </defs>
+  <path d="M100,10 L120,75 L185,75 L135,110 L155,175 L100,135 L45,175 L65,110 L15,75 L80,75 Z" class="neon-star-path"/>
+</svg>

@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import AppRouter from './routes/Router';
-import './styles/main.css';
+import React, { useState, useEffect, useRef } from "react";
+import AppRouter from "./routes/Router";
+import "./styles/main.css";
 
 const App: React.FC = () => {
   const [musicEnabled, setMusicEnabled] = useState(true);
@@ -20,7 +20,9 @@ const App: React.FC = () => {
   useEffect(() => {
     if (audioRef.current) {
       if (musicEnabled) {
-        audioRef.current.play().catch((e) => console.error('Failed to play audio:', e));
+        audioRef.current
+          .play()
+          .catch((e) => console.error("Failed to play audio:", e));
       } else {
         audioRef.current.pause();
       }
@@ -29,13 +31,19 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (audioRef.current && musicEnabled) {
-      audioRef.current.play().catch((e) => console.error('Failed to play audio:', e));
+      audioRef.current
+        .play()
+        .catch((e) => console.error("Failed to play audio:", e));
     }
   }, []);
 
   return (
     <>
-      <audio ref={audioRef} src={`${import.meta.env.BASE_URL}src/assets/music1.mp3`} loop />
+      <audio
+        ref={audioRef}
+        src={`${import.meta.env.BASE_URL}src/assets/music1.mp3`}
+        loop
+      />
       <AppRouter toggleMusic={toggleMusic} musicEnabled={musicEnabled} />
     </>
   );

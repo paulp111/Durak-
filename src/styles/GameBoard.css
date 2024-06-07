@@ -38,7 +38,9 @@
   align-items: center;
 }
 
-.player-hand, .opponent1-hand, .opponent2-hand {
+.player-hand,
+.opponent1-hand,
+.opponent2-hand {
   position: absolute;
   display: flex;
   flex-wrap: wrap;
@@ -90,7 +92,8 @@ button:hover {
   background-color: var(--soviet-red);
 }
 
-h1, h2 {
+h1,
+h2 {
   color: var(--soviet-orange);
 }
 

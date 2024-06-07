@@ -1,6 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../styles/Settings.css';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import "../styles/Settings.css";
 
 interface SettingsProps {
   toggleMusic: () => void;
@@ -16,7 +16,7 @@ const Settings: React.FC<SettingsProps> = ({ toggleMusic, musicEnabled }) => {
       <div className="settings-option">
         <label>Music</label>
         <button onClick={toggleMusic}>
-          {musicEnabled ? 'Disable' : 'Enable'}
+          {musicEnabled ? "Disable" : "Enable"}
         </button>
       </div>
       <div className="settings-option">
@@ -34,7 +34,7 @@ const Settings: React.FC<SettingsProps> = ({ toggleMusic, musicEnabled }) => {
           <option value="hard">Hard</option>
         </select>
       </div>
-      <button onClick={() => navigate('/')}>Zurück</button>
+      <button onClick={() => navigate("/")}>Zurück</button>
     </div>
   );
 };
