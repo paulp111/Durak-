@@ -1,16 +1,20 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/StartScreen.css";
-import videoSource from "../assets/vid.mp4"; 
+import videoSource from "../assets/vid2.mp4"; 
 
 const StartScreen: React.FC = () => {
   const navigate = useNavigate();
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     document.body.classList.add("start-screen-active");
     if (audioRef.current) {
       audioRef.current.play();
+    }
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5; 
     }
     return () => {
       document.body.classList.remove("start-screen-active");
@@ -26,10 +30,11 @@ const StartScreen: React.FC = () => {
 
   return (
     <div className="start-screen">
-      <video autoPlay loop muted>
+      <video ref={videoRef} autoPlay loop muted>
         <source src={videoSource} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
+      <div className="highlight-box"></div> {/* Background highlight box */}
       <div className="logo-container">
         <div className="glow"></div>
         <svg className="start-logo neon-star" viewBox="0 0 200 200">
@@ -71,22 +76,26 @@ const StartScreen: React.FC = () => {
         </svg>
       </div>
       <div className="title">
-        <h1>Дурак</h1>
+        <h1>ДУРАК</h1>
         <h2>a Soviet card game</h2>
       </div>
       <div className="button-container">
-        <a onClick={handleStartGame}>
-          <span>Play</span>
-        </a>
-        <Link to="/howto">
-          <span>How To</span>
-        </Link>
-        <Link to="/settings">
-          <span>Settings</span>
-        </Link>
-        <Link to="/">
-          <span>Exit</span>
-        </Link>
+        <div className="button-block">
+          <a onClick={handleStartGame}>
+            <span>Play</span>
+          </a>
+          <Link to="/howto">
+            <span>How To</span>
+          </Link>
+        </div>
+        <div className="button-block">
+          <Link to="/settings">
+            <span>Settings</span>
+          </Link>
+          <Link to="/">
+            <span>Exit</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
