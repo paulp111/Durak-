@@ -29,7 +29,7 @@ const StartScreen: React.FC = () => {
     <div className="start-screen">
       <div className="logo-container">
         <div className="glow"></div>
-        <img src={durakLogo} alt="Durak Logo" className="logo" />
+        <img src={durakLogo} alt="Durak Logo" className="start-logo" />
       </div>
       <div className="title">
         <h1>Дурак</h1>
