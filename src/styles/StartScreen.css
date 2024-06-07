@@ -63,13 +63,12 @@ html, body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255,0,0,0.8) 0%, rgba(255,0,0,0) 60%);
-  opacity: 0.8;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, rgba(255,0,0,1) 0%, rgba(255,0,0,0) 70%);
   filter: blur(30px);
   z-index: 0;
-  animation: fadeGlow 5s infinite;
+  animation: heartbeat 5s infinite;
 }
 
 @keyframes bounce {
@@ -81,14 +80,29 @@ html, body {
   }
 }
 
-@keyframes fadeGlow {
+@keyframes heartbeat {
   0% {
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0.8;
   }
-  50% {
-    opacity: 0.4;
+  20% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.9;
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(1.05);
+    opacity: 0.9;
   }
   100% {
+    transform: translate(-50%, -50%) scale(1);
     opacity: 0.8;
   }
 }
