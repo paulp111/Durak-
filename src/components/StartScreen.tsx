@@ -2,6 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/StartScreen.css";
 import videoSource from "../assets/vid2.mp4"; 
+import hammerIcon from "../assets/hammer.svg"; 
+import sickleIcon from "../assets/sickle.svg"; 
 
 const StartScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -34,7 +36,7 @@ const StartScreen: React.FC = () => {
         <source src={videoSource} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-      <div className="highlight-box"></div> {/* Background highlight box */}
+      <div className="highlight-box"></div> {}
       <div className="logo-container">
         <div className="glow"></div>
         <svg className="start-logo neon-star" viewBox="0 0 200 200">
@@ -76,8 +78,12 @@ const StartScreen: React.FC = () => {
         </svg>
       </div>
       <div className="title">
-        <h1>ДУРАК</h1>
-        <h2>a Soviet card game</h2>
+        <h1>
+          <img src={hammerIcon} alt="Hammer" className="icon hammer" />
+          ДУРАК
+          <img src={sickleIcon} alt="Sickle" className="icon sickle" />
+        </h1>
+        <h2>русская карточная игра</h2>
       </div>
       <div className="button-container">
         <div className="button-block">

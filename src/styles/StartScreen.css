@@ -22,7 +22,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden; /* To prevent scrolling */
+  overflow: hidden; 
 }
 
 #root {
@@ -72,7 +72,7 @@ body {
   justify-content: center;
   width: 200px;
   height: 200px;
-  z-index: 1; /* Ensures it is above the highlight box */
+  z-index: 1; 
 }
 
 .start-logo {
@@ -153,7 +153,7 @@ body {
   justify-content: center;
   gap: 1rem;
   margin-top: 2rem;
-  z-index: 1; /* Ensures buttons are above the highlight box */
+  z-index: 1;
 }
 
 .button-block {
@@ -242,19 +242,41 @@ a span::before {
 .title {
   text-align: center;
   margin-top: 1rem;
-  z-index: 1; /* Ensures text is above the highlight box */
+  z-index: 1; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 }
 
 .title h1 {
   font-size: 3rem;
   color: var(--soviet-red);
   margin: 0;
-  font-family: 'Orbitron', sans-serif; /* Stylish font for title */
+  font-family: 'Orbitron', sans-serif; 
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .title h2 {
   font-size: 1.2rem;
   color: var(--soviet-cream);
   margin: 0;
-  font-family: 'Orbitron', sans-serif; /* Stylish font for subtitle */
+  font-family: 'Orbitron', sans-serif; 
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  fill: white; 
+}
+
+.hammer {
+  transform: rotate(-15deg);
+}
+
+.sickle {
+  transform: rotate(15deg);
 }

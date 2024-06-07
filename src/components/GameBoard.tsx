@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchDeck, drawCards, Card } from "../api/deckApi";
 import Hand from "./Hand";
 import "../styles/GameBoard.css";
-import durakLogo from "../assets/Red_star.svg.png"; // Import the star image
+import durakLogo from "../assets/Red_star.svg.png"; 
 
 const GameBoard: React.FC = () => {
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
@@ -168,7 +168,7 @@ const GameBoard: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <img src={durakLogo} alt="Durak Logo" className="game-logo" />{" "}
-      {/* Add the star image here with a specific class */}
+      {/* Add the star image here with a specific class...... NOT NEED  */} 
       <h1 className="text-4xl font-bold text-center mb-4">Durak Game</h1>
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">

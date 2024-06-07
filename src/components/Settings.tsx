@@ -22,7 +22,7 @@ const Settings: React.FC<SettingsProps> = ({ toggleMusic, musicEnabled }) => {
       <div className="settings-option">
         <label>Sound Effects</label>
         <button>
-          {/* Sound effects logic here */}
+          {/*----------------------- Sound effects logic ---------------------*/}
           Disable
         </button>
       </div>
