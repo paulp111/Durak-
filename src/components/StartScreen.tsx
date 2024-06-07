@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/StartScreen.css";
+import videoSource from "../assets/vid.mp4"; 
 
 const StartScreen: React.FC = () => {
   const navigate = useNavigate();
@@ -25,6 +26,10 @@ const StartScreen: React.FC = () => {
 
   return (
     <div className="start-screen">
+      <video autoPlay loop muted>
+        <source src={videoSource} type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
       <div className="logo-container">
         <div className="glow"></div>
         <svg className="start-logo neon-star" viewBox="0 0 200 200">
