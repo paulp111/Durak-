@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/StartScreen.css";
-import videoSource from "../assets/vid2.mp4"; 
+import videoSource from "../assets/vid12.mp4"; 
 import hammerIcon from "../assets/hammer.svg"; 
 import sickleIcon from "../assets/sickle.svg"; 
 
@@ -15,9 +15,10 @@ const StartScreen: React.FC = () => {
     if (audioRef.current) {
       audioRef.current.play();
     }
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5; 
-    }
+    //SLOW DOWN VID
+   // if (videoRef.current) {
+   //   videoRef.current.playbackRate = 0.5; 
+   //  }
     return () => {
       document.body.classList.remove("start-screen-active");
       if (audioRef.current) {

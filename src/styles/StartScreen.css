@@ -274,7 +274,7 @@ a span::before {
 }
 
 .hammer {
-  transform: rotate(-15deg);
+  transform: rotate(-90deg);
 }
 
 .sickle {
