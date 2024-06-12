@@ -1,24 +1,18 @@
 import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/StartScreen.css";
-import videoSource from "../assets/vid12.mp4"; 
-import hammerIcon from "../assets/hammer.svg"; 
-import sickleIcon from "../assets/sickle.svg"; 
+import hammerIcon from "../assets/hammer.svg";
+import sickleIcon from "../assets/sickle.svg";
 
 const StartScreen: React.FC = () => {
   const navigate = useNavigate();
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     document.body.classList.add("start-screen-active");
     if (audioRef.current) {
       audioRef.current.play();
     }
-    //SLOW DOWN VID
-   // if (videoRef.current) {
-   //   videoRef.current.playbackRate = 0.5; 
-   //  }
     return () => {
       document.body.classList.remove("start-screen-active");
       if (audioRef.current) {
@@ -33,11 +27,7 @@ const StartScreen: React.FC = () => {
 
   return (
     <div className="start-screen">
-      <video ref={videoRef} autoPlay loop muted>
-        <source src={videoSource} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      <div className="highlight-box"></div> {}
+      <div className="highlight-box"></div>
       <div className="logo-container">
         <div className="glow"></div>
         <svg className="start-logo neon-star" viewBox="0 0 200 200">

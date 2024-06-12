@@ -2,12 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/HowTo.css";
 
-import chibitImage from "../assets/chibit.png";
-import heartImage from "../assets/heart.png";
-
 const HowTo: React.FC = () => {
   return (
     <div className="how-to">
+      <div className="highlight-box"></div>
       <h1>How To Play</h1>
       <p>
         Durak is a Russian origin card game of attack and defense.
@@ -27,16 +25,10 @@ const HowTo: React.FC = () => {
         simple.
       </p>
       <Link to="/">
-        <button className="button">Zurück</button>
+        <button className="back-button">
+          <span>Back</span>
+        </button>
       </Link>
-      <div className="chibit-image-container">
-        <img src={chibitImage} alt="Chibi" className="chibit-image" />
-        <div className="speech-bubble">Game made by paulp111</div>
-        <div
-          className="heart"
-          style={{ backgroundImage: `url(${heartImage})` }}
-        ></div>
-      </div>
     </div>
   );
 };
