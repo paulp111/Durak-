@@ -5,9 +5,18 @@ import "../styles/Settings.css";
 interface SettingsProps {
   toggleMusic: () => void;
   musicEnabled: boolean;
+  toggleClickSound: () => void;
+  clickSoundEnabled: boolean;
+  playClickSound: () => void;
 }
 
-const Settings: React.FC<SettingsProps> = ({ toggleMusic, musicEnabled }) => {
+const Settings: React.FC<SettingsProps> = ({
+  toggleMusic,
+  musicEnabled,
+  toggleClickSound,
+  clickSoundEnabled,
+  playClickSound,
+}) => {
   const navigate = useNavigate();
 
   return (
@@ -21,10 +30,14 @@ const Settings: React.FC<SettingsProps> = ({ toggleMusic, musicEnabled }) => {
           </button>
         </div>
         <div className="settings-option">
-          <label>Sound Effects</label>
-          <button className="option-button">
-            Disable
+          <label>Click Sound</label>
+          <button className="option-button" onClick={toggleClickSound}>
+            {clickSoundEnabled ? "Disable" : "Enable"}
           </button>
+        </div>
+        <div className="settings-option">
+          <label>Sound Effects</label>
+          <button className="option-button">Disable</button>
         </div>
         <div className="settings-option">
           <label>Difficulty</label>
@@ -34,7 +47,13 @@ const Settings: React.FC<SettingsProps> = ({ toggleMusic, musicEnabled }) => {
             <option value="hard">Hard</option>
           </select>
         </div>
-        <button className="back-button" onClick={() => navigate("/")}>
+        <button
+          className="back-button"
+          onClick={() => {
+            playClickSound();
+            navigate("/");
+          }}
+        >
           <span>Back</span>
         </button>
       </div>

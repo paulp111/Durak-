@@ -2,10 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/HowTo.css";
 
-const HowTo: React.FC = () => {
+interface HowToProps {
+  playClickSound: () => void;
+}
+
+const HowTo: React.FC<HowToProps> = ({ playClickSound }) => {
   return (
     <div className="how-to">
-      <div className="highlight-box"></div>
       <h1>How To Play</h1>
       <p>
         Durak is a Russian origin card game of attack and defense.
@@ -24,11 +27,12 @@ const HowTo: React.FC = () => {
         Although the rules seem complex, once you start playing it's very
         simple.
       </p>
-      <Link to="/">
-        <button className="back-button">
-          <span>Back</span>
-        </button>
+      <Link to="/" onClick={playClickSound}>
+        <button className="button">Zurück</button>
       </Link>
+      <div className="chibit-image-container">
+        <div className="speech-bubble">Game made by paulp111</div>
+      </div>
     </div>
   );
 };

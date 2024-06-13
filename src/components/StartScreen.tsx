@@ -4,7 +4,11 @@ import "../styles/StartScreen.css";
 import hammerIcon from "../assets/hammer.svg";
 import sickleIcon from "../assets/sickle.svg";
 
-const StartScreen: React.FC = () => {
+interface StartScreenProps {
+  playClickSound: () => void;
+}
+
+const StartScreen: React.FC<StartScreenProps> = ({ playClickSound }) => {
   const navigate = useNavigate();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -22,6 +26,7 @@ const StartScreen: React.FC = () => {
   }, []);
 
   const handleStartGame = () => {
+    playClickSound();
     navigate("/game");
   };
 
@@ -81,15 +86,15 @@ const StartScreen: React.FC = () => {
           <a onClick={handleStartGame}>
             <span>Play</span>
           </a>
-          <Link to="/howto">
+          <Link to="/howto" onClick={playClickSound}>
             <span>How To</span>
           </Link>
         </div>
         <div className="button-block">
-          <Link to="/settings">
+          <Link to="/settings" onClick={playClickSound}>
             <span>Settings</span>
           </Link>
-          <Link to="/">
+          <Link to="/" onClick={playClickSound}>
             <span>Exit</span>
           </Link>
         </div>

@@ -86,6 +86,9 @@ button {
   cursor: pointer;
   font-size: 1rem;
   transition: background-color 0.3s;
+  margin: 10px 0;
+  position: relative;
+  -webkit-box-reflect: below 1px -webkit-linear-gradient(transparent, rgba(0, 0, 0, 0.267));
 }
 
 button:hover {
@@ -104,4 +107,65 @@ h2 {
 
 .text-lg {
   color: var(--soviet-gray);
+}
+
+button::before,
+button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #f00, #f00, #f00, #f00, #f00);
+  background-size: 400%;
+  opacity: 0;
+  filter: blur(20px);
+  transition: 0.5s;
+}
+
+button:hover::before,
+button:hover::after {
+  opacity: 1;
+  animation: animate 20s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 300% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+button span {
+  position: absolute;
+  display: block;
+  top: 1px;
+  left: 1px;
+  right: 1px;
+  bottom: 1px;
+  text-align: center;
+  background: #0c0c0c;
+  color: rgba(255, 255, 255, 0.2);
+  transition: 0.5s;
+  z-index: 1;
+}
+
+button:hover span {
+  color: rgba(255, 255, 255, 1);
+}
+
+button span::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.1);
 }
