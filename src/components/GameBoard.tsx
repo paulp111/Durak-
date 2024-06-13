@@ -168,7 +168,7 @@ const GameBoard: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <img src={durakLogo} alt="Durak Logo" className="game-logo" />{" "}
-      {/* Add the star image here with a specific class...... NOT NEED  */} 
+      {/* Add star image with specific class...... NOT NEED  */} 
       <h1 className="text-4xl font-bold text-center mb-4">Durak Game</h1>
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
