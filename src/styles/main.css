@@ -62,7 +62,7 @@ body {
   height: 105px;
 }
 
-/*-----------------------------------*/ 
+/*-----------------------------------*/
 .click-effect {
   animation: clickAnimation 0.3s ease-in-out;
 }

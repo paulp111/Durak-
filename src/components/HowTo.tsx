@@ -9,6 +9,7 @@ interface HowToProps {
 const HowTo: React.FC<HowToProps> = ({ playClickSound }) => {
   return (
     <div className="how-to">
+      <div className="highlight-box"></div>
       <h1>How To Play</h1>
       <p>
         Durak is a Russian origin card game of attack and defense.

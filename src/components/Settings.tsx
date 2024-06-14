@@ -21,6 +21,7 @@ const Settings: React.FC<SettingsProps> = ({
 
   return (
     <div className="settings">
+      <div className="highlight-box"></div>
       <div className="settings-container">
         <h1>Settings</h1>
         <div className="settings-option">
@@ -34,10 +35,6 @@ const Settings: React.FC<SettingsProps> = ({
           <button className="option-button" onClick={toggleClickSound}>
             {clickSoundEnabled ? "Disable" : "Enable"}
           </button>
-        </div>
-        <div className="settings-option">
-          <label>Sound Effects</label>
-          <button className="option-button">Disable</button>
         </div>
         <div className="settings-option">
           <label>Difficulty</label>
@@ -54,7 +51,7 @@ const Settings: React.FC<SettingsProps> = ({
             navigate("/");
           }}
         >
-          <span>Back</span>
+          Back
         </button>
       </div>
     </div>

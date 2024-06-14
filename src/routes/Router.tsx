@@ -23,8 +23,14 @@ const AppRouter: React.FC<AppRouterProps> = ({
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <Routes>
-        <Route path="/" element={<StartScreen playClickSound={playClickSound} />} />
-        <Route path="/howto" element={<HowTo playClickSound={playClickSound} />} />
+        <Route
+          path="/"
+          element={<StartScreen playClickSound={playClickSound} />}
+        />
+        <Route
+          path="/howto"
+          element={<HowTo playClickSound={playClickSound} />}
+        />
         <Route
           path="/settings"
           element={

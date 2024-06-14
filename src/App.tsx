@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import AppRouter from "./routes/Router";
 import "./styles/main.css";
-import videoSource from "./assets/vid.mp4"; 
-import clickSound from "./assets/click.mp3"; 
+import videoSource from "./assets/vid.mp4";
+import clickSound from "./assets/click.mp3";
 
 const App: React.FC = () => {
   const [musicEnabled, setMusicEnabled] = useState(true);
-  const [clickSoundEnabled, setClickSoundEnabled] = useState(true); 
+  const [clickSoundEnabled, setClickSoundEnabled] = useState(true);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const clickAudioRef = useRef<HTMLAudioElement | null>(null); 
+  const clickAudioRef = useRef<HTMLAudioElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   const toggleMusic = () => {
@@ -67,9 +67,9 @@ const App: React.FC = () => {
       <AppRouter
         toggleMusic={toggleMusic}
         musicEnabled={musicEnabled}
-        toggleClickSound={toggleClickSound} 
-        clickSoundEnabled={clickSoundEnabled} 
-        playClickSound={playClickSound} 
+        toggleClickSound={toggleClickSound}
+        clickSoundEnabled={clickSoundEnabled}
+        playClickSound={playClickSound}
       />
     </div>
   );

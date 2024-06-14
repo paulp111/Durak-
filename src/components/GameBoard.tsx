@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { fetchDeck, drawCards, Card } from "../api/deckApi";
 import Hand from "./Hand";
 import "../styles/GameBoard.css";
-import durakLogo from "../assets/Red_star.svg.png"; 
+import durakLogo from "../assets/Red_star.svg.png";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const GameBoard: React.FC = () => {
   const [playerHand, setPlayerHand] = useState<Card[]>([]);
@@ -19,6 +20,7 @@ const GameBoard: React.FC = () => {
     "player" | "opponent1" | "opponent2" | null
   >(null);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const startGame = async () => {
       const deckId = await fetchDeck();
@@ -165,10 +167,20 @@ const GameBoard: React.FC = () => {
     }
   };
 
+  const handleBackClick = () => {
+    if (table.length > 0) {
+      if (window.confirm("Wirklich zurück?")) {
+        navigate("/");
+      }
+    } else {
+      navigate("/");
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <img src={durakLogo} alt="Durak Logo" className="game-logo" />{" "}
-      {/* Add star image with specific class...... NOT NEED  */} 
+      {/* Add star image with specific class...... NOT NEED  */}
       <h1 className="text-4xl font-bold text-center mb-4">Durak Game</h1>
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
@@ -229,13 +241,21 @@ const GameBoard: React.FC = () => {
               }))}
             />
           </div>
-          <button
-            className="bg-blue-500 text-white p-2 rounded"
-            onClick={endTurn}
-            disabled={turn !== "player"}
-          >
-            End Turn
-          </button>
+          <div className="flex justify-between items-center mt-4">
+            <button
+              className="bg-blue-500 text-white p-2 rounded"
+              onClick={endTurn}
+              disabled={turn !== "player"}
+            >
+              End Turn
+            </button>
+            <button
+              className="bg-red-500 text-white p-2 rounded"
+              onClick={handleBackClick}
+            >
+              Zurück
+            </button>
+          </div>
         </>
       )}
     </div>
