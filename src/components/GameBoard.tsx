@@ -21,6 +21,7 @@ const GameBoard: React.FC = () => {
   >(null);
 
   const navigate = useNavigate();
+
   useEffect(() => {
     const startGame = async () => {
       const deckId = await fetchDeck();
@@ -180,7 +181,6 @@ const GameBoard: React.FC = () => {
   return (
     <div className="container mx-auto p-4">
       <img src={durakLogo} alt="Durak Logo" className="game-logo" />{" "}
-      {/* Add star image with specific class...... NOT NEED  */}
       <h1 className="text-4xl font-bold text-center mb-4">Durak Game</h1>
       {gameOver ? (
         <div className="text-center text-2xl text-red-500 font-bold">
@@ -196,14 +196,14 @@ const GameBoard: React.FC = () => {
               <img
                 src={trumpCard.image}
                 alt={trumpCard.code}
-                className="mx-auto"
+                className="mx-auto card-wrapper"
               />
             )}
             <p className="text-lg">Trump Card</p>
           </div>
           <div className="table mb-4">
             <h2 className="text-2xl font-semibold mb-2">Table</h2>
-            <div className="table-cards flex flex-wrap">
+            <div className="table-cards flex flex-wrap card-place">
               {table.map((entry, index) => (
                 <div key={index} className="flex items-center mb-2">
                   <img
@@ -252,6 +252,7 @@ const GameBoard: React.FC = () => {
             <button
               className="bg-red-500 text-white p-2 rounded"
               onClick={handleBackClick}
+              id="back-button"
             >
               Zurück
             </button>
