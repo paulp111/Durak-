@@ -85,7 +85,7 @@ body {
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
-  box-shadow: none; /* Ensures no shadow is applied */
+  box-shadow: none; 
 }
 
 .option-button:hover,
@@ -106,7 +106,7 @@ body {
   font-family: "Poppins", sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
   text-transform: uppercase;
-  box-shadow: none; /* Ensures no shadow is applied */
+  box-shadow: none; 
 }
 
 .back-button:hover {
@@ -119,7 +119,7 @@ button,
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: 2px;
-  box-shadow: none; /* Ensures no shadow is applied */
+  box-shadow: none; 
 }
 
 button,
@@ -127,5 +127,5 @@ button,
 button:before,
 .option-select:after,
 button:after {
-  content: none; /* Ensures no shadow is applied */
+  content: none; 
 }
