@@ -60,10 +60,10 @@ const App: React.FC = () => {
       </video>
       <audio
         ref={audioRef}
-        src={`${import.meta.env.BASE_URL}src/assets/ambient.mp3`}
+        src={`${import.meta.env.BASE_URL}src/assets/background_music.m4a`}
         loop
       />
-      <audio ref={clickAudioRef} src={clickSound} /> {/* Click sound audio */}
+      <audio ref={clickAudioRef} src={clickSound} /> {}
       <AppRouter
         toggleMusic={toggleMusic}
         musicEnabled={musicEnabled}
